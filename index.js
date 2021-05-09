@@ -1,32 +1,37 @@
 const express=require("express");
 const app=express();
 
-//app.get(route,callback);
-//get-->read
-//put-->update
-//post -->create
-//delete-->delete
-app.get("/",(req,res)=>{
-    res.send("This is Home Page")
+app.get('/',(req,res)=>{
+    res.send("This is Home PAge with no call Back funtion");
 });
 
-
-app.get("/Info/about",(req,res)=>{
-    res.send("This is about Page");
+app.get('/info',(req,res,next)=>{
+    
+    console.log("About Information");
+    next()
+    
+},(req,res)=>{
+    res.send("Contact Information");
 });
 
-app.get("/*fly",(req,res)=>{
-    res.send("This is ...Fly Page");
-});
+const a1=(req, res, next)=>{
+    console.log("A1");
+    next()
+};
 
-app.get('/Name/:name/PRN/:prn',(req,res)=>{
-    res.send(`Information of Student ${req.params}`);
-});
+const a2=(req, res, next)=>{
+    console.log("A2");
+    next()
+};
 
-app.get("/*",(req,res)=>{
-    res.send("This is Error Page");
-});
+const a3=(req, res, next)=>{
+    res.send("A3");
+};
 
-app.listen(3000,()=>{
-    console.log("Listening to port no 3000");
-});
+app.get('/Array', [a1,a2,a3])
+
+app.listen(3000, () => {
+  console.log('app listening at http://localhost: 3000')
+})
+
+
