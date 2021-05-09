@@ -1,17 +1,32 @@
-const fs=require("fs");
-const http=require("http");
-const oper=require("./sample");
+const express=require("express");
+const app=express();
 
-const server=http.createServer((req,res)=>{
-    fs.readFile('read.txt',(err,data)=>{
-        res.writeHead(200,{'Context-type':'text/html'});
-        res.write(data);
-        res.write(`Addition of 6 and 7:${oper.add(6,7)}   `);
-        res.end(`My Name is :${oper.name}`);
-
-    });
-    
+//app.get(route,callback);
+//get-->read
+//put-->update
+//post -->create
+//delete-->delete
+app.get("/",(req,res)=>{
+    res.send("This is Home Page")
 });
-server.listen(3000,()=>{
-    console.log("Listening to Port No 3000");
+
+
+app.get("/Info/about",(req,res)=>{
+    res.send("This is about Page");
+});
+
+app.get("/*fly",(req,res)=>{
+    res.send("This is ...Fly Page");
+});
+
+app.get('/Name/:name/PRN/:prn',(req,res)=>{
+    res.send(`Information of Student ${req.params}`);
+});
+
+app.get("/*",(req,res)=>{
+    res.send("This is Error Page");
+});
+
+app.listen(3000,()=>{
+    console.log("Listening to port no 3000");
 });
